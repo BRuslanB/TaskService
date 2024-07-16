@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="insert-data-for-task" author="ruslan">
+        <insert tableName="t_task">
+            <column name="id" value="1"/>
+            <column name="title" value="Завершить задачу по Liquibase"/>
+            <column name="description" value="Закончить задачу по Liquibase"/>
+            <column name="deadline_date_time" value="2024-07-12 12:30:25"/>
+            <column name="status" value="0"/>
+            <column name="user_id" value="1"/>
+        </insert>
+        <insert tableName="t_task">
+            <column name="id" value="2"/>
+            <column name="title" value="Подготовить эссэ"/>
+            <column name="description" value="Написать эссэ"/>
+            <column name="deadline_date_time" value="2024-07-13 00:24:32"/>
+            <column name="status" value="0"/>
+            <column name="user_id" value="2"/>
+        </insert>
+        <insert tableName="t_task">
+            <column name="id" value="3"/>
+            <column name="title" value="Пойти в бассейн"/>
+            <column name="description" value="Сходить в бассейн"/>
+            <column name="deadline_date_time" value="2024-07-12 20:10:45"/>
+            <column name="status" value="0"/>
+            <column name="user_id" value="3"/>
+        </insert>
+        <insert tableName="t_task">
+            <column name="id" value="4"/>
+            <column name="title" value="Завершить задачу по FlyWay"/>
+            <column name="description" value="Закончить задачу по FlyWay"/>
+            <column name="deadline_date_time" value="2024-07-12 18:22:34"/>
+            <column name="status" value="0"/>
+            <column name="user_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

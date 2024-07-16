@@ -1,0 +1,68 @@
+version: '3.9'
+services:
+  app-task-service:
+    image: bruslanb/app-task-service-image:1.0.1
+    container_name: app-task-service-container
+    user: '1001:1001'
+    depends_on:
+      db-task-service:
+        condition: service_healthy
+      app-user-service:
+        condition: service_started
+    environment:
+      - SERVER_PORT=8000
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-task-service:5432/task_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - FEIGN_USER_URL=http://app-user-service:8080/user
+    ports:
+      - '8000:8000'
+
+  db-task-service:
+    image: 'postgres:alpine'
+    container_name: pg-task-service-container
+    environment:
+      POSTGRES_DB: task_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5440:5432'
+    volumes:
+      - ./db-task-data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  app-user-service:
+    image: bruslanb/app-user-service-image:1.0.1
+    container_name: app-user-service-container
+    user: '1001:1001'
+    depends_on:
+      db-user-service:
+        condition: service_healthy
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-user-service:5432/user_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - '8080:8080'
+
+  db-user-service:
+    image: 'postgres:alpine'
+    container_name: pg-user-service-container
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5442:5432'
+    volumes:
+      - ./db-user-data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5

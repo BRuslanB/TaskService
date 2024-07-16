@@ -1,0 +1,23 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: TaskService
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+
+feign:
+  user:
+    url: http://localhost:8080/user
